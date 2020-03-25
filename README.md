@@ -9,3 +9,4 @@
 - [7. Monitoring image and container](7.MONITORING.md)
 - [8. Setting up a web server](8.WEB-SERVER.md)
 - [9. Docker compose to build Apache PHP and MySQL Stack](9.DOCKER-COMPOSE.md)
+- [10. Install SQL Server](10.SQL-SERVER.md)
