@@ -6,3 +6,6 @@
 - [4.Volume](4.VOLUME.md)
 - [5.Network](5.NETWORK.md)
 - [6.HTTPD PHP and MySQL](6.HTTPD-PHP-MYSQL.md)
+- [7. Monitoring image and container](7.MONITORING.md)
+- [8. Setting up a web server](8.WEB-SERVER.md)
+- [9. Docker compose to build Apache PHP and MySQL Stack](9.DOCKER-COMPOSE.md)
