@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+  service1:
+    image: hwebz/swarmtest:dotnet
+    ports:
+      - 8085:8085
+    deploy:
+      replicas: 5
+      resources:
+        limits: # max
+          cpus: '0.5'
+          memory: 150M
+        reservations: # min
+          cpus: '0.25'
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+  service2:
+    image: hwebz/swarmtest:php
+    ports:
+      - 8086:8085
+    deploy:
+      replicas: 5
+      resources:
+        limits: # max
+          cpus: '0.5'
+          memory: 150M
+        reservations: # min
+          cpus: '0.25'
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    service3:
+      image: hwebz/swarmtest:node
+      ports:
+        - 8087:8085
+      deploy:
+        replicas: 5
+        resources:
+          limits: # max
+            cpus: '0.5'
+            memory: 150M
+          reservations: # min
+            cpus: '0.25'
+            memory: 50M
+        restart_policy:
+          condition: on-failure
