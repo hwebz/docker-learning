@@ -1,2 +1,4 @@
 code/db/*
 docker-compose/db/*
+node_modules
+.vscode
