@@ -12,4 +12,5 @@
 - [10. Install SQL Server](10.SQL-SERVER.md)
 - [11. HAProxy for Load Balancing](11.HAPROXY.md)
 - [12. Using docker-machine for creating multiple hosts](12.DOCKER-MACHINE.md)
-- [13. Using docker stack to deploy apps](13.DOCKER-STACK.md)
+- [13. Docker swarm](13.DOCKER-SWARM.md)
+- [14. Using docker stack to deploy apps](14.DOCKER-STACK.md)
