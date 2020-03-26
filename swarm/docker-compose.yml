@@ -3,6 +3,10 @@ version: "3.7"
 services:
   service1:
     image: hwebz/swarmtest:dotnet
+    networks:
+      - net1
+    volumes:
+      - vol1:/d1/
     ports:
       - 8085:8085
     deploy:
@@ -18,6 +22,10 @@ services:
         condition: on-failure
   service2:
     image: hwebz/swarmtest:php
+    networks:
+      - net2
+    volumes:
+      - vol1:/d1/
     ports:
       - 8086:8085
     deploy:
@@ -31,18 +39,38 @@ services:
           memory: 50M
       restart_policy:
         condition: on-failure
-    service3:
-      image: hwebz/swarmtest:node
-      ports:
-        - 8087:8085
-      deploy:
-        replicas: 5
-        resources:
-          limits: # max
-            cpus: '0.5'
-            memory: 150M
-          reservations: # min
-            cpus: '0.25'
-            memory: 50M
-        restart_policy:
-          condition: on-failure
+  service3:
+    image: hwebz/swarmtest:node
+    networks:
+      - net1
+      - net2
+    volumes:
+      - vol1:/d1/
+    ports:
+      - 8087:8085
+    deploy:
+      replicas: 5
+      resources:
+        limits: # max
+          cpus: '0.5'
+          memory: 150M
+        reservations: # min
+          cpus: '0.25'
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+
+networks:
+  net1:
+  net2:
+    driver: overlay
+    name: www-net2
+
+volumes:
+  vol1:
+    driver: local
+    name: vol1
+    driver_opts:
+      type: none
+      device: "/home/"
+      o: bind
