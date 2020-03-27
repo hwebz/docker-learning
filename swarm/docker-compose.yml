@@ -1,12 +1,43 @@
 version: "3.7"
 
 services:
+  ssh:
+    image: hwebz/sshserver
+    ports:
+      - 2222:22
+    environment:
+      sshuser: sshuser
+      password: 1234567
+    volumes:
+      - ./data/:/data/
+    deploy:
+      replicas: 3
+      replacement:
+        constraints:
+          - node.role=manager
+  samba:
+    image: hwebz/samba
+    ports:
+      - 139:139
+      - 145:145
+    environment:
+      smbuser: smbuser
+      password: 1234567
+    volumes:
+      - ./data/:/data/ # share /data in swarm/ folder to /data in samba service containers folder
+    deploy:
+      replicas: 3
+      placement:
+        constraints: # for creating containers only on manager node (same /data for all machines)
+          - node.role=manager
   service1:
     image: hwebz/swarmtest:dotnet
     networks:
       - net1
     volumes:
       - vol1:/d1/
+      - vol2:/d2/
+      - vol3:/d3/
     ports:
       - 8085:8085
     deploy:
@@ -26,6 +57,8 @@ services:
       - net2
     volumes:
       - vol1:/d1/
+      - vol2:/d2/
+      - vol3:/d3/
     ports:
       - 8086:8085
     deploy:
@@ -46,6 +79,8 @@ services:
       - net2
     volumes:
       - vol1:/d1/
+      - vol2:/d2/
+      - vol3:/d3/
     ports:
       - 8087:8085
     deploy:
@@ -74,3 +109,18 @@ volumes:
       type: none
       device: "/home/"
       o: bind
+  vol2:
+    driver: local
+    name: vol2
+    driver_opts:
+      type: cifs
+      device: //192.168.99.117/data # Manager node's IP
+      o: "username=smbuser,password=1234567,file_mode=0777,dir_mode=0777"
+  vol3:
+    driver: vieux/sshfs
+    name: vol3
+    driver_opts:
+      sshcmd: "sshuser@192.168.99.117:/data/"
+      port: 2222
+      password: 1234567
+      allow_other: ""
